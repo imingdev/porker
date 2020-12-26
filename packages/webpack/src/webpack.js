@@ -38,7 +38,7 @@ export default class WebpackBundle {
       });
 
       // Reload renderer
-      await porker.callHook('server:resources', options.dev ? mfs : fs);
+      await porker.callHook('renderer:resources', options.dev ? mfs : fs);
     });
 
     if (options.dev) {

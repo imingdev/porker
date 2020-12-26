@@ -27,6 +27,7 @@ module.exports = {
     'object-curly-newline': 0,
     'import/no-extraneous-dependencies': 'off',
     'global-require': 'off',
-    'import/no-dynamic-require': 'off'
+    'import/no-dynamic-require': 'off',
+    'class-methods-use-this': 'off'
   }
 };

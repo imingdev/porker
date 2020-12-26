@@ -1,0 +1,21 @@
+{
+  "name": "@porker/renderer",
+  "version": "1.0.0-bate",
+  "author": "mingdev <mingdev@163.com>",
+  "main": "dist/renderer.js",
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-helmet": "^6.1.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

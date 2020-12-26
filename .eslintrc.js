@@ -25,6 +25,8 @@ module.exports = {
     'react/forbid-prop-types': 0,
     'consistent-return': 'off',
     'object-curly-newline': 0,
-    'import/no-extraneous-dependencies': 'off'
+    'import/no-extraneous-dependencies': 'off',
+    'global-require': 'off',
+    'import/no-dynamic-require': 'off'
   }
 };

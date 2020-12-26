@@ -1,0 +1,20 @@
+{
+  "name": "@porker/core",
+  "version": "1.0.0-bate",
+  "author": "mingdev <mingdev@163.com>",
+  "main": "dist/index.js",
+  "dependencies": {
+    "@porker/server": "^1.0.0-bate",
+    "@porker/webpack": "^1.0.0-bate",
+    "consola": "^2.15.0",
+    "hable": "^3.0.0",
+    "lodash": "^4.17.20"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  }
+}

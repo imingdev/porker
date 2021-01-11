@@ -11,6 +11,8 @@ export default class WebpackBaseConfig {
   constructor(porker) {
     this.porker = porker;
     this.options = porker.options;
+
+    this.nodeEnv = this.nodeEnv.bind(this);
   }
 
   get assetsPath() {

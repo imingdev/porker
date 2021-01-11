@@ -1,3 +1,4 @@
+import path from 'path';
 import WebpackManifestPlugin from 'webpack-manifest-plugin';
 
 export default class ClientManifestPlugin extends WebpackManifestPlugin {
@@ -13,10 +14,7 @@ export default class ClientManifestPlugin extends WebpackManifestPlugin {
             .filter((row) => !/hot-update.js$/.test(row));
 
           const styles = fileList.filter((row) => /\.css$/.test(row));
-          const view = `${options.serverDir}/${name}.js`
-            .split('/')
-            .filter(Boolean)
-            .join('/');
+          const view = path.join(options.serverDir, `${name}.js`);
 
           return {
             [name]: {

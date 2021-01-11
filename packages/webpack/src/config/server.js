@@ -11,7 +11,8 @@ export default class WebpackServerConfig extends WebpackBaseConfig {
   }
 
   entry() {
-    const { porker, loadDefaultPages } = this;
+    const { porker, options, loadDefaultPages } = this;
+    const { build } = options;
 
     return WebpackDynamicEntryPlugin.getEntry({
       pattern: [
@@ -25,7 +26,7 @@ export default class WebpackServerConfig extends WebpackBaseConfig {
 
         return Object.assign.apply(Object, Object.keys(entry)
           .map((name) => {
-            const key = `${porker.resolve.buildServerDir}/${name}`
+            const key = `${build.dir.server}/${name}`
               .split('/')
               .filter(Boolean)
               .join('/');

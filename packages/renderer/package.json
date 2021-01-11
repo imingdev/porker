@@ -4,9 +4,11 @@
   "author": "mingdev <mingdev@163.com>",
   "main": "dist/renderer.js",
   "dependencies": {
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "files": [
     "dist"

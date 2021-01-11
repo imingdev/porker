@@ -26,20 +26,20 @@ export default class Require {
     return root(options.dir.src, p);
   }
 
-  page(p) {
+  page(...p) {
     const { src, options } = this;
 
-    return src(options.dir.page, p);
+    return src(options.dir.page, ...p);
   }
 
-  build(p) {
+  build(...p) {
     const { root, options } = this;
-    return root(options.dir.build, p);
+    return root(options.dir.build, ...p);
   }
 
-  buildServer(p) {
+  buildServer(...p) {
     const { build, options } = this;
 
-    return build(options.build.dir.server, p);
+    return build(options.build.dir.server, ...p);
   }
 }

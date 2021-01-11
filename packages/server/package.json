@@ -7,7 +7,7 @@
     "@porker/renderer": "1.0.0-bate",
     "compression": "^1.7.4",
     "connect": "^3.7.0",
-    "path-to-regexp": "^6.2.0",
+    "path-to-regexp": "^1.8.0",
     "serve-static": "^1.14.1"
   },
   "files": [

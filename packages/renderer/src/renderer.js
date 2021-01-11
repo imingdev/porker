@@ -39,14 +39,33 @@ export default class Renderer {
   }
 
   loadResources(_fs) {
-    const { server } = this;
+    const { server, porker } = this;
 
-    this.resources = server.loadResources(_fs);
+    let result = {};
+
+    try {
+      const fullPath = porker.resolve.buildManifest;
+
+      if (!_fs.existsSync(fullPath)) return result;
+
+      const contents = _fs.readFileSync(fullPath, 'utf-8');
+
+      result = JSON.parse(contents) || {};
+    } catch (err) {
+      porker.logger.error('Unable to load resource:', err);
+    }
+
+    this.resources = Object.assign.apply(Object, Object.keys(result).map((name) => ({
+      [name]: {
+        ...result[name],
+        regex: server.compileRouteRegex(name)
+      }
+    })));
   }
 
   requireReactElement(viewName) {
     const { porker } = this;
-    const { default: Component, getServerSideProps } = porker.require.buildServer(`${viewName}.js`);
+    const { default: Component, getServerSideProps } = porker.require.buildServer(viewName);
 
     return {
       Component,
@@ -70,7 +89,7 @@ export default class Renderer {
     return ReactDOMServer.renderToStaticMarkup(createReactElement(Component, locals));
   }
 
-  async render(view, context) {
+  async render(name, context) {
     const {
       options,
       resources,
@@ -78,11 +97,10 @@ export default class Renderer {
       renderReactToString,
       renderReactToStaticMarkup
     } = this;
-    if (!resources[view]) view = '_error';
-    const { scripts, styles } = resources[view];
+    const { scripts, styles, view } = resources[name];
 
-    const { Component: Document } = requireReactElement('_document');
-    const { Component: App, getServerSideProps: getAppServerSideProps } = requireReactElement('_app');
+    const { Component: Document } = requireReactElement('_document.js');
+    const { Component: App, getServerSideProps: getAppServerSideProps } = requireReactElement('_app.js');
     const { Component, getServerSideProps } = requireReactElement(view);
 
     let state;

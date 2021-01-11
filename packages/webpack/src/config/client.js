@@ -80,8 +80,7 @@ export default class WebpackClientConfig extends WebpackBaseConfig {
       }),
       new ClientManifestPlugin({
         publicPath,
-        fileName: porker.resolve.buildManifest,
-        serverDir: porker.resolve.buildServerDir
+        fileName: porker.resolve.buildManifest
       })
     );
 

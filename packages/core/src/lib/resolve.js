@@ -13,7 +13,7 @@ export default class Resolve {
 
     this.srcDir = this.root(porker.options.dir.src);
     this.pageDir = this.src(porker.options.dir.page);
-    this.globPageDir = this.src(porker.options.dir.page, porker.options.pattern);
+    this.globPageDir = this.page(porker.options.pattern);
 
     this.buildDir = this.root(porker.options.dir.build);
     this.buildManifest = this.build(porker.options.build.dir.manifest);
@@ -27,26 +27,26 @@ export default class Resolve {
     return path.join.apply(path, [options.dir.root].concat(_p));
   }
 
-  src(p) {
+  src(...p) {
     const { root, options } = this;
 
-    return root(options.dir.src, p);
+    return root(options.dir.src, ...p);
   }
 
-  page(p) {
+  page(...p) {
     const { src, options } = this;
 
-    return src(options.dir.page, p);
+    return src(options.dir.page, ...p);
   }
 
-  build(p) {
+  build(...p) {
     const { root, options } = this;
-    return root(options.dir.build, p);
+    return root(options.dir.build, ...p);
   }
 
-  buildServer(p) {
+  buildServer(...p) {
     const { build, options } = this;
 
-    return build(options.build.dir.server, p);
+    return build(options.build.dir.server, ...p);
   }
 }

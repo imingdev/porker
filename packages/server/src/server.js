@@ -1,6 +1,8 @@
+import { sep } from 'path';
 import serveStatic from 'serve-static';
 import connect from 'connect';
 import Renderer from '@porker/renderer';
+import Regexp from 'path-to-regexp';
 import porkerMiddleware from './middleware/porker';
 
 export default class Server {
@@ -9,7 +11,7 @@ export default class Server {
     this.options = porker.options;
     this.app = connect();
 
-    this.renderer = new Renderer(porker);
+    this.renderer = new Renderer(this);
 
     // devMiddleware placeholder
     if (porker.options.dev) {
@@ -18,6 +20,7 @@ export default class Server {
       });
     }
 
+    this.compileRouteRegex = this.compileRouteRegex.bind(this);
     this.setupMiddleware = this.setupMiddleware.bind(this);
     this.useMiddleware = this.useMiddleware.bind(this);
   }
@@ -33,6 +36,30 @@ export default class Server {
     await setupMiddleware();
 
     return this;
+  }
+
+  compileRouteRegex(name, pathToRegexpOptions) {
+    let _path;
+    if (name === '_error') {
+      _path = '*';
+    } else if (name === 'index') {
+      _path = '/';
+    } else {
+      const normalUrl = name
+        .split(sep)
+        .filter(Boolean)
+        .join('/')
+        .replace(new RegExp('/index$'), '')
+        .replace(/_/g, ':');
+      _path = `/${normalUrl}`;
+    }
+    return Regexp(_path, [], {
+      sensitive: false,
+      strict: false,
+      end: true,
+      delimiter: '/',
+      ...pathToRegexpOptions
+    });
   }
 
   setupMiddleware() {
@@ -79,7 +106,11 @@ export default class Server {
   useMiddleware(middleware) {
     const { app } = this;
 
-    if (typeof middleware === 'object') return app.use(middleware.route = '/', middleware.handle);
-    return app.use(middleware);
+    if (typeof middleware === 'object') {
+      app.use(middleware.route = '/', middleware.handle);
+      return;
+    }
+
+    app.use(middleware);
   }
 }

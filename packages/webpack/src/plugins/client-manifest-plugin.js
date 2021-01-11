@@ -1,4 +1,3 @@
-import path from 'path';
 import WebpackManifestPlugin from 'webpack-manifest-plugin';
 
 export default class ClientManifestPlugin extends WebpackManifestPlugin {
@@ -7,6 +6,7 @@ export default class ClientManifestPlugin extends WebpackManifestPlugin {
       ...options,
       fileName: options.fileName,
       generate: (seed, files, entryPoints) => Object.assign.apply(Object, Object.keys(entryPoints)
+        .sort((a, b) => a.indexOf('_error') - b.indexOf('_error'))
         .map((name) => {
           const fileList = entryPoints[name].map((file) => `${options.publicPath}${file}`);
 
@@ -14,7 +14,7 @@ export default class ClientManifestPlugin extends WebpackManifestPlugin {
             .filter((row) => !/hot-update.js$/.test(row));
 
           const styles = fileList.filter((row) => /\.css$/.test(row));
-          const view = path.join(options.serverDir, `${name}.js`);
+          const view = `${name}.js`;
 
           return {
             [name]: {

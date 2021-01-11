@@ -19,7 +19,7 @@ export default class WebpackBaseConfig {
     const { porker, env, options: { dev, build: { dir, filenames } } } = this;
     const { app, chunk, css, img, font, video } = filenames || {};
 
-    const resolvePath = (_path) => path.posix.join(dev ? dir.static : '.', _path);
+    const resolvePath = (_path) => path.posix.join(dev ? '.' : dir.static, _path);
 
     const loadFileNamePath = (name) => {
       let fileName;

@@ -1,6 +1,6 @@
 {
   "name": "@porker/webpack",
-  "version": "1.0.0-bate",
+  "version": "1.0.0-bate1",
   "author": "mingdev <mingdev@163.com>",
   "main": "dist/webpack.js",
   "dependencies": {

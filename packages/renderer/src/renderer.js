@@ -4,9 +4,10 @@ import ReactDOMServer from 'react-dom/server';
 import { Helmet } from 'react-helmet';
 
 export default class Renderer {
-  constructor(porker) {
-    this.porker = porker;
-    this.options = porker.options;
+  constructor(server) {
+    this.server = server;
+    this.porker = server.porker;
+    this.options = server.porker.options;
 
     this.resources = {};
 
@@ -32,29 +33,15 @@ export default class Renderer {
     // -- Production mode --
 
     // Try once to load SSR resources from fs
-    await loadResources(fs);
+    loadResources(fs);
 
     return this;
   }
 
   loadResources(_fs) {
-    const { porker } = this;
+    const { server } = this;
 
-    let result = {};
-
-    try {
-      const fullPath = porker.resolve.build(porker.resolve.buildManifest);
-
-      if (!_fs.existsSync(fullPath)) return result;
-
-      const contents = _fs.readFileSync(fullPath, 'utf-8');
-
-      result = JSON.parse(contents) || {};
-    } catch (err) {
-      porker.logger.error('Unable to load resource:', err);
-    }
-
-    return result;
+    this.resources = server.loadResources(_fs);
   }
 
   requireReactElement(viewName) {

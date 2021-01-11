@@ -1,7 +1,10 @@
 const getCurrentRes = (url, resources) => {
   const name = Object.keys(resources).find((n) => resources[n].regex.test(url));
 
-  return resources[name];
+  return {
+    ...resources[name],
+    name
+  };
 };
 
 const getContext = (url, regex, req, res) => {
@@ -31,10 +34,10 @@ export default ({ renderer }) => async (req, res, next) => {
     const url = decodeURI(req.url);
     res.statusCode = 200;
     const { resources } = renderer;
-    const { regex, view } = getCurrentRes(url, resources);
+    const { regex, name } = getCurrentRes(url, resources);
     const context = getContext(url, regex, req, res);
 
-    const html = await renderer.render(view, context);
+    const html = await renderer.render(name, context);
 
     // Send response
     res.setHeader('Content-Type', 'text/html; charset=utf-8');

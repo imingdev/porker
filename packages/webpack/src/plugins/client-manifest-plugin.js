@@ -13,9 +13,14 @@ export default class ClientManifestPlugin extends WebpackManifestPlugin {
             .filter((row) => !/hot-update.js$/.test(row));
 
           const styles = fileList.filter((row) => /\.css$/.test(row));
+          const view = `${options.serverDir}/${name}.js`
+            .split('/')
+            .filter(Boolean)
+            .join('/');
 
           return {
             [name]: {
+              view,
               scripts,
               styles
             }
